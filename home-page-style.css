@@ -1,0 +1,100 @@
+body{
+    background-color: black;
+}
+#navigationBar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#navBarDiv{
+    background: red;
+}
+li{
+    display: inline-block;
+    margin-left: 200px;
+    padding-top: 50px;
+}
+#connectfourLogo{
+    width: 25%;
+    height: 25%;
+}
+nav{
+    float: right;
+}
+
+nav a{
+    color: yellow;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: 'Courier New', Courier, monospace;
+}
+h4{
+    margin-left: 1415px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+h2{
+    margin-left: 700px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+#profilePicture{
+    margin-left: 1390px;
+    height: 8%;
+    width:8%;
+}
+#connectFourImage{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: 25%;
+}
+#onlineButton{
+    margin-left: 600px;
+    width: 10%;
+    font-family: 'Courier New', Courier, monospace;
+}
+#offlineButton{
+    margin-left: 10px;
+    width: 10%;
+    font-family: 'Courier New', Courier, monospace;
+}
+#redCircle1{
+    width: 3.5%;
+    height: 3.5%;
+    margin-left: 560px;
+}
+#redCircle2{
+    width: 3.5%;
+    height: 3.5%;
+    margin-left: 53px;
+}
+#redCircle3{
+    width: 3.5%;
+    height: 3.5%;
+    margin-left: 53px;
+}
+#redCircle4{
+    width: 3.5%;
+    height: 3.5%;
+    margin-left: 53px;
+}
+#yellowCircle1{
+    width: 7%;
+    height: 7%;
+    margin-left: 535px;
+}
+#yellowCircle2{
+    width: 7%;
+    height: 7%;
+}
+#yellowCircle3{
+    width: 7%;
+    height: 7%;
+}
+#yellowCircle4{
+    width: 7%;
+    height: 7%;
+}

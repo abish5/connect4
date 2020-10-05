@@ -1,23 +1,28 @@
 body{
     background-color: black;
 }
+
 #navigationBar{
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
+
 #navBarDiv{
     background: red;
 }
+
 li{
     display: inline-block;
     margin-left: 200px;
     padding-top: 50px;
 }
+
 #connectfourLogo{
     width: 25%;
     height: 25%;
 }
+
 nav{
     float: right;
 }
@@ -29,16 +34,19 @@ nav a{
     font-size: 15px;
     font-family: 'Courier New', Courier, monospace;
 }
+
 h4{
     margin-left: 1415px;
     color: white;
     font-family: 'Courier New', Courier, monospace;
 }
+
 h2{
     margin-left: 700px;
     color: white;
     font-family: 'Courier New', Courier, monospace;
 }
+
 #profilePicture{
     margin-left: 1390px;
     height: 8%;

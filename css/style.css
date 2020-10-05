@@ -20,6 +20,7 @@ ul {
 nav {
     background-color: red;
     display: flex;
+    border: 1px solid white;
 }
 
 nav .container {
@@ -57,4 +58,10 @@ main {
     display: flex;
     justify-content: center;
     border: 1px white solid;
+}
+
+
+
+footer {
+    margin-top: 170px;
 }

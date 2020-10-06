@@ -20,7 +20,6 @@ ul {
 nav {
     background-color: red;
     display: flex;
-    border: 1px solid white;
 }
 
 nav .container {
@@ -55,13 +54,122 @@ main .main-container {
 }
 
 main {
+    height: 100vh;
     display: flex;
     justify-content: center;
-    border: 1px white solid;
+}
+
+.user-container {
+    margin-top: 30px;
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-column-1 {
+    width: 70%;
+    height: 100%;
+}
+
+.player-info {
+    background-color: red;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 20%;
+}
+
+.profile-text {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-text ul {
+    border: 1px solid darkred;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 20px;
+    width: 100%;
+}
+
+.player-info img {
+    width: 18%;
+}
+
+.user-column-2 {
+    border: 1px solid darkred;
+    background-color: red;
+    width: 30%;
+    height: 385px;
+}
+
+#history-header{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    background-color: red;
+}
+
+#placeholder-game {
+    border: 1px solid brown;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+}
+
+.game-history {
+    border: 1px solid brown;
+    height: 100%;
+    width: 100%;
+}
+
+.past-games-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    
+}
+
+.past-games-header h1 { 
+    margin-left: 380px;
+    width: 50%;
+}
+
+.past-games {
+    height: 700px;
+    width: 100%;
+}
+
+#player-header {
+    flex-grow: 2;
+    margin-left: 20px;
 }
 
 
 
-footer {
-    margin-top: 170px;
+.friend-info {
+    width: 100%;
+    height: 385px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+#friend-list {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#friend-list img{
+    width: 20%;
 }

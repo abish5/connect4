@@ -8,32 +8,37 @@
     </head>
 
     <body>
-        <form>
-            <h1>Welcome To Connect 4!</h1>
-            <img src="https://www.sparefoot.com/self-storage/blog/wp-content/uploads/2014/01/connect-41.jpg" alt="broken img">
-            <div id="loginDiv">
-            <label for="username">Enter your username:</label>
-            <input type="text" id="username" value = "Username" name="username">
-            <label for="password">Enter your password:</label>
-            <input type="text" id="password" value="Password" name="password"><br>
-            <button type="button" id="loginButton" value="loginButton" name="loginButton">Log in</button>
-            <button type="button" id="forgetPasswordButton" value="forgetPasswordButton" name="forgetPasswordButton">Forget password</button>
+        <main>
+            <div class="main-container">
+                <a href="/home-page.html"><img src="/img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
+                    <br>
+                    <h1>Welcome to Connect 4!</h1>
+                    <br>
+                    <img src="https://www.sparefoot.com/self-storage/blog/wp-content/uploads/2014/01/connect-41.jpg" alt="broken img">
+                    <p>---------------------------------------------------------------------------------------------------------------</p>
+                    <div id="loginDiv">
+                    <label for="username">Enter your username:</label>
+                    <input type="text" id="username" placeholder = "Username" name="username">
+                    <label for="password">Enter your password:</label>
+                    <input type="text" id="password" placeholder="Password" name="password"><br>
+                    <button type="button" id="loginButton" placeholder="loginButton" name="loginButton">Log in</button>
+                    <button type="button" id="forgetPasswordButton" value="forgetPasswordButton" name="forgetPasswordButton">Forget password</button>
+                    </div>
+                    <br>
+                    <br>
+                    <div id="signupDiv">
+                    <h3 id="signupHeading">Sign up now!</h3>
+                    <p>---------------------------------------------------------------------------------------------------------------</p>
+                    <label for="newUserName">Search a username:</label>
+                    <input type= "text" id="newUserName" placeholder= "Username" name="newUsername">
+                    <label for="newPassword">Search a username:</label>
+                    <input type= "text" id="newPassword" placeholder= "Password" name="newPassword"><br>
+                    <button type="button" id="signupButton" value="signupButton" name="signupButton">Sign up</button>
+                    </div>
+                    <br>
+                </form>
             </div>
-            <br>
-            <br>
-            <div id="signupDiv">
-            <h3 id="signupHeading">Sign up now!</h3>
-            <p>---------------------------------------------------------------------------------------------------------------</p>
-            <label for="newUserName">Search a username:</label>
-            <input type= "text" id="newUserName" value= "Username" name="newUsername">
-            <label for="newPassword">Search a username:</label>
-            <input type= "text" id="newPassword" value= "Password" name="newPassword"><br>
-            <button type="button" id="signupButton" value="signupButton" name="signupButton">Sign up</button>
-            </div>
-            <br>
-        </form>
+        </main>
     </body>
-    <script>
-        
-    </script>
+    <script src="/js/assignment-script.js"></script>
 </html>

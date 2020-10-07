@@ -10,18 +10,30 @@
     <nav>
         <a href=./home-page.html><img src="/img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
         <ul id="navigationBar">
-            <li><a href="./game-page.html">Game</a></li>
-            <li><a href="./sign-in.html">Sign up</a></li>
-            <li><a href="./leaderboard.html">Leaderboard</a></li>
-            <li><a href="./instructions-page.html">Instructions</a></li>
+            <li><a href="./home-page.html" id="leader-home" onmouseover="LeaderhighlightOverHome()" onmouseout="LeaderunhighlightHome()">Home</a></li>
+            <li><a href="./game-page.html" id="leader-game" onmouseover="LeaderhighlightOverGame()" onmouseout="LeaderunhighlightGame()">Game</a></li>
+            <li><a href="./leaderboard.html" id="leader-leader" onmouseover="LeaderhighlightOverLeaderboard()" onmouseout="LeaderunhighlightLeaderboard()">Leaderboard</a></li>
+            <li><a href="./instructions-page.html" id="leader-instructions" onmouseover="LeaderhighlightOverInstructions()" onmouseout="LeaderunhighlightInstructions()">Instructions</a></li>
         </ul>
     </nav>
+    <img src="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1702/yupiramos170209532.jpg" alt="trophy photo" id="trophy">
     <main>
-        <div class="main-container">
-            
+        <div class="main-container" id="main-container1">
+            <h1>1st: </h1>
+            <h4>Games Won: </h4><br>
+            <h2>2nd: </h2>
+            <h4>Games Won:</h4><br>
+            <h4>3rd: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>4th: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>5th: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>6th: </h4>
+            <h4>Games Won:</h4><br>
         </div>
     </main>
     <footer>(footer)</footer>
-    
+    <script src="./assignment-script.js"></script>
 </body>
 </html>

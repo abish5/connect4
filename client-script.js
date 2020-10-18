@@ -2,6 +2,12 @@ const http = require('http');
 const fs = require('fs');
 
 const server = http.createServer(function(request, response) {
+    fs.readFile('./home-page.html', function (err, html) {
+        if (err) throw err; 
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    });
     if(request.method ===  'GET'){
         if(request.url === "./game-page.html"){
             fs.readFile("game-page.html", function(err, data){

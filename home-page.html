@@ -4,14 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Home Page</title>
-        <link rel="stylesheet" href="/css/home-page-style.css">
+        <link rel="stylesheet" href="./css/home-page-style.css">
     </head>
 
     <body>
         <nav>
-<<<<<<< HEAD
             <div id="nav-main">
-                <a href="/home-page.html"><img src="/img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
+                <a href="./home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
                 <ul id="navigationBar">
                     <li><a href=./home-page.html id="game-home" onmouseover="GamehighlightOverHome()" onmouseout="GameunhighlightHome()">Home</a></li>
                     <li><a href="./game-page.html" id="game-game" onmouseover="GamehighlightOverGame()" onmouseout="GameunhighlightGame()">Game</a></li>
@@ -23,7 +22,7 @@
                 <h4>My Profile</h4>
                 <br>
                 <a href=./user-profile.html target="_blank">
-                <img src="/img/placeholder-user.png" alt="broken img" id="profilePicture" onmouseover="highlightOverImage()" onmouseout="unhighlightImage()">
+                <img src="./img/placeholder-user.png" alt="broken img" id="profilePicture" onmouseover="highlightOverImage()" onmouseout="unhighlightImage()">
                 </a>
             </div>
         </nav>
@@ -56,37 +55,28 @@
             </div>
         </main>
     </body>
-    <script src="/js/assignment-script.js"></script>
-</html>
-=======
-        <ul id="navigationBar">
-            <li><a href=./home-page.html id="home-home" onmouseover="highlightOverHome()" onmouseout="unhighlightHome()">Home</a></li>
-            <li><a href="./game-page.html" id="home-game" onmouseover="highlightOverGame()" onmouseout="unhighlightGame()">Game</a></li>
-            <li><a href="./leaderboard.html" id="home-leaderboard" onmouseover="highlightOverLeaderboard()" onmouseout="unhighlightLeaderboard()">Leaderboard</a></li>
-            <li><a href="./instructions-page.html" id="home-instructions" onmouseover="highlightOverInstructions()" onmouseout="unhighlightInstructions()">Instructions</a></li>
-        </ul>
-        </nav>
-        </div>
-        <h4>My Profile</h4>
-        <a href=./user-profile.html target="_blank">
-        <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" alt="broken img" id="profilePicture" onmouseover="highlightOverImage()" onmouseout="unhighlightImage()">
-        </a>
-        <img src="https://i.redd.it/axorctfsk4v01.jpg" alt="broken img" id="redCircle1">
-        <img src="https://i.redd.it/axorctfsk4v01.jpg" alt="broken img" id="redCircle2">
-        <img src="https://i.redd.it/axorctfsk4v01.jpg" alt="broken img" id="redCircle3">
-        <img src="https://i.redd.it/axorctfsk4v01.jpg" alt="broken img" id="redCircle4">
-        <img src="https://www.sparefoot.com/self-storage/blog/wp-content/uploads/2014/01/connect-41.jpg" alt="broken image" id="connectFourImage">
-        <img src="https://i.ytimg.com/vi/GKFI-8QLmeo/maxresdefault.jpg" alt="broken img" id="yellowCircle1">
-        <img src="https://i.ytimg.com/vi/GKFI-8QLmeo/maxresdefault.jpg" alt="broken img" id="yellowCircle2">
-        <img src="https://i.ytimg.com/vi/GKFI-8QLmeo/maxresdefault.jpg" alt="broken img" id="yellowCircle3">
-        <img src="https://i.ytimg.com/vi/GKFI-8QLmeo/maxresdefault.jpg" alt="broken img" id="yellowCircle4">
-        <br>
-        <br>
-        <h2>Play Now!</h2>
-        <button type="button" id="onlineButton" name="onlineButton" value="onlineButton">Online</button>
-        <button type="button" id="offlineButton" name="offlineButton" vlue="offlineButton">Offline</button>
+    <script>
+        const xhr = new XMLHttpRequest();
 
-    </body>
-    <script src="./assignment-script.js"></script>
+        // xhr.onload = function () {
+        //     if (this.status === 200) {
+        //         xhr.open("GET", "./game-page.html");
+        //         console.log(xhr.responseURL());
+        //     } else {
+        //         console.warn("Did no recieve 200 OK from server");
+        //     }
+        // }
+        
+        const changePage = () => {
+            xhr.open("GET", "./game-page.html", true);
+            console.log("hello xhr");
+            xhr.send();
+        }
+
+        const gameButton = document.getElementById("onlineButton");
+        gameButton.addEventListener('click', changePage);
+
+        
+    </script>
+    <script src="./js/script.js"></script>
 </html>
->>>>>>> c2f6e40451ba3fca597e085ab67c824ccda749bd

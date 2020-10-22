@@ -55,28 +55,5 @@
             </div>
         </main>
     </body>
-    <script>
-        const xhr = new XMLHttpRequest();
-
-        // xhr.onload = function () {
-        //     if (this.status === 200) {
-        //         xhr.open("GET", "./game-page.html");
-        //         console.log(xhr.responseURL());
-        //     } else {
-        //         console.warn("Did no recieve 200 OK from server");
-        //     }
-        // }
-        
-        const changePage = () => {
-            xhr.open("GET", "./game-page.html", true);
-            console.log("hello xhr");
-            xhr.send();
-        }
-
-        const gameButton = document.getElementById("onlineButton");
-        gameButton.addEventListener('click', changePage);
-
-        
-    </script>
     <script src="./js/script.js"></script>
 </html>

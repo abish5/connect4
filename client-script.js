@@ -193,7 +193,11 @@ const server = http.createServer(function(req, res) {
 				res.end();
             });
         }
-        
+        else if(http.request.url === "https://raw.githubusercontent.com/dominictarr/random-name/master/first-names.txt"){
+            response.statusCode = 200;
+            //response.write("Hello from the server");
+            response.end();
+        }
     }
     else{
         res.statusCode = 404;

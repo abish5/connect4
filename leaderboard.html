@@ -8,31 +8,57 @@
 </head>
 <body>
     <nav>
-        <a href="./home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
+        <a href="/home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
         <ul id="navigationBar">
             <li><a href=./home-page.html id="game-home" onmouseover="GamehighlightOverHome()" onmouseout="GameunhighlightHome()">Home</a></li>
             <li><a href="./game-page.html" id="game-game" onmouseover="GamehighlightOverGame()" onmouseout="GameunhighlightGame()">Game</a></li>
             <li><a href="./leaderboard.html" id="game-leaderboard" onmouseover="GamehighlightOverLeaderboard()" onmouseout="GameunhighlightLeaderboard()">Leaderboard</a></li>
             <li><a href="./sign-in.html" id="game-sign-in" onmouseover="GamehighlightOverSignIn()" onmouseout="GameunhighlightSignIn()">Sign in</a></li>
+            <li><a href="./instructions-page.html" id="leader-instructions" onmouseover="LeaderhighlightOverInstructions()" onmouseout="LeaderunhighlightInstructions()">Instructions</a></li>
         </ul>
     </nav>
     <img src="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1702/yupiramos170209532.jpg" alt="trophy photo" id="trophy">
     <main>
         <div class="main-container">
-            <h1 style="font-size: 50px;">1st: </h1>
-            <h4 style="font-size: 50px;">Games Won: </h4><br>
-            <h2 style="font-size: 50px;" >2nd: </h2>
-            <h4 style="font-size: 50px;" >Games Won:</h4><br>
-            <h4 style="font-size: 50px;">3rd: </h4>
-            <h4 style="font-size: 50px;">Games Won:</h4><br>
-            <h4 style="font-size: 50px;">4th: </h4>
-            <h4 style="font-size: 50px;">Games Won:</h4><br>
-            <h4 style="font-size: 50px;">5th: </h4>
-            <h4 style="font-size: 50px;">Games Won:</h4><br>
-            <h4 style="font-size: 50px;">6th: </h4>
-            <h4 style="font-size: 50px;">Games Won:</h4><br>
+        <div id = "leader-info"></div>
+        <div class="main-container" id="main-container1">
+            <h1>1st: </h1>
+            <h4>Games Won: </h4>
+            <button style = "margin-left: 900px;" type = "button" id = "displayLeaderButton" name = "displayLeaderButton" value = "displayLeaderButton">Display Leader</button>
+            <h2>2nd: </h2>
+            <h4>Games Won:</h4><br>
+            <h4>3rd: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>4th: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>5th: </h4>
+            <h4>Games Won:</h4><br>
+            <h4>6th: </h4>
+            <h4>Games Won:</h4><br>
         </div>
     </main>
+    <script>
+        var leaderContainer = document.getElementById("leader-info");
+        let names = [];
+        function displayLeaders(){
+            let req = new XMLHttpRequest();
+            req.open("GET", "https://raw.githubusercontent.com/dominictarr/random-name/master/first-names.txt");
+            req.onload = function(){
+                console.log("HEllo");
+                var ourData = req.responseText;
+                names = ourData.split("\r\n");
+                console.log(names[0]);
+                renderHTML(names);
+        };
+        req.send();
+        }
+        document.getElementById("displayLeaderButton").addEventListener("click", displayLeaders);
+        function renderHTML(data){
+            var htmlString = data[0];
+            leaderContainer.insertAdjacentHTML('beforeend', htmlString);
+        }
+    </script>
     <script src="./js/script.js"></script>
+    <footer>(footer)</footer>
 </body>
 </html>

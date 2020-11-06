@@ -1,12 +1,31 @@
-body{
-    background-color: black;
-}
-
-#navigationBar{
-    list-style-type: none;
+* {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
+body{
+    color: yellow;
+    background-color: black;
+}
+
+.main-container {
+    background-color: red;
+    width: 1085px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
 
 #navBarDiv{
     background: red;
@@ -19,12 +38,29 @@ li{
 }
 
 #connectfourLogo{
-    width: 25%;
-    height: 25%;
+    margin-left: 270px;
+    align-self: center;
 }
 
 nav{
-    float: right;
+    background-color: red;
+    display: flex;
+}
+
+#nav-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#nav-profile {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 nav a{
@@ -35,74 +71,42 @@ nav a{
     font-family: 'Courier New', Courier, monospace;
 }
 
+nav ul{
+    align-self: center;
+}
+
 h4{
-    margin-left: 1415px;
-    color: white;
     font-family: 'Courier New', Courier, monospace;
 }
 
 h2{
-    margin-left: 700px;
     color: white;
     font-family: 'Courier New', Courier, monospace;
 }
 
 #profilePicture{
-    margin-left: 1390px;
-    height: 8%;
-    width:8%;
+    margin-left: 110px;
+    height: 100%;
+    width: 30%;
+}
+
+#play-buttons{
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 #connectFourImage{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 25%;
-    height: 25%;
+    width: 300px;
+    height: 200px;
 }
 #onlineButton{
-    margin-left: 600px;
     width: 10%;
     font-family: 'Courier New', Courier, monospace;
 }
 #offlineButton{
-    margin-left: 10px;
     width: 10%;
     font-family: 'Courier New', Courier, monospace;
-}
-#redCircle1{
-    width: 3.5%;
-    height: 3.5%;
-    margin-left: 560px;
-}
-#redCircle2{
-    width: 3.5%;
-    height: 3.5%;
-    margin-left: 53px;
-}
-#redCircle3{
-    width: 3.5%;
-    height: 3.5%;
-    margin-left: 53px;
-}
-#redCircle4{
-    width: 3.5%;
-    height: 3.5%;
-    margin-left: 53px;
-}
-#yellowCircle1{
-    width: 7%;
-    height: 7%;
-    margin-left: 535px;
-}
-#yellowCircle2{
-    width: 7%;
-    height: 7%;
-}
-#yellowCircle3{
-    width: 7%;
-    height: 7%;
-}
-#yellowCircle4{
-    width: 7%;
-    height: 7%;
 }

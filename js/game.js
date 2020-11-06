@@ -1,5 +1,5 @@
-var numOfcols = 7
-var numOfrows = 6
+ numOfcols = 7
+const numOfrows = 6
 
 
 function createGame() {

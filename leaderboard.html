@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" type="text/css"   href="/css/style.css">
     <title>Connect 4</title>
 </head>
 <body>
@@ -14,15 +14,13 @@
             <li><a href="./game-page.html" id="game-game" onmouseover="GamehighlightOverGame()" onmouseout="GameunhighlightGame()">Game</a></li>
             <li><a href="./leaderboard.html" id="game-leaderboard" onmouseover="GamehighlightOverLeaderboard()" onmouseout="GameunhighlightLeaderboard()">Leaderboard</a></li>
             <li><a href="./sign-in.html" id="game-sign-in" onmouseover="GamehighlightOverSignIn()" onmouseout="GameunhighlightSignIn()">Sign in</a></li>
-            <li><a href="./instructions-page.html" id="leader-instructions" onmouseover="LeaderhighlightOverInstructions()" onmouseout="LeaderunhighlightInstructions()">Instructions</a></li>
         </ul>
     </nav>
     <img src="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1702/yupiramos170209532.jpg" alt="trophy photo" id="trophy">
     <main>
         <div class="main-container">
-        <div id = "leader-info"></div>
         <div class="main-container" id="main-container1">
-            <h1>1st: </h1>
+            <h1 id = "leader-info">1st: </h1>
             <h4>Games Won: </h4>
             <button style = "margin-left: 900px;" type = "button" id = "displayLeaderButton" name = "displayLeaderButton" value = "displayLeaderButton">Display Leader</button>
             <h2>2nd: </h2>
@@ -54,11 +52,13 @@
         }
         document.getElementById("displayLeaderButton").addEventListener("click", displayLeaders);
         function renderHTML(data){
-            var htmlString = data[0];
-            leaderContainer.insertAdjacentHTML('beforeend', htmlString);
+            var htmlString = data[0]; 
+            if (leaderContainer.innerHTML === "1st: ") {
+                leaderContainer.insertAdjacentHTML('beforeend', htmlString);
+            }
         }
     </script>
-    <script src="./js/script.js"></script>
+    <script type='application/javascript' src="./js/script.js"></script>
     <footer>(footer)</footer>
 </body>
 </html>

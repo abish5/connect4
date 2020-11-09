@@ -1,7 +1,57 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const port = 3000;
 
+app.use(session({ secret: 'hyfns73jsm9r3j%67g'}));
+
+let registeredUsers = [{username: "steve", password: "1234"}, {username: "ricky", password: "bobby"}, {username: "joerogan", password: "jre"}];
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+function authentication(req, res, next){
+	if(req.session.loggedin){
+		next();
+	}
+	else{
+		res.status(401);
+		res.send("Unauthorized");
+	}
+}
+
+function logIn(req, res, next){
+	if(req.session.loggedin){
+		res.status(200);
+		res.send("You're already logged in");
+		return;
+	}
+	
+	let username = req.body.username;
+	let password = req.body.password;
+	
+	const findUsername = registeredUsers.find((findUser) => findUser.username === username);
+
+	if(findUsername){
+		//Check if user's password is the same
+		if(findUsername.password === password){
+			req.session.loggedin = true;
+			req.session.username = username;
+			res.status = 200;
+			res.send("You have logged in");
+		}
+		else{
+			res.status(401);
+			res.send("Incorrect password. Authorization failed.");
+			return;
+		}
+	}
+	else{
+		res.status(401);
+		res.send("No usernames match. Authorization failed.");
+		return;
+	}
+}
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req,res) {
@@ -22,7 +72,8 @@ app.get('/leaderboard.html', function(req, res){
 
 app.get('/sign-in.html', function(req, res){ 
     res.sendFile(__dirname + '/sign-in.html')
-}); 
+});
+app.post('/sign-in.html', logIn);
 
 app.get('/user-profile.html', function(req, res){ 
     res.sendFile(__dirname + '/user-profile.html')

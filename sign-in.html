@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
@@ -17,12 +17,13 @@
                     <img src="https://www.sparefoot.com/self-storage/blog/wp-content/uploads/2014/01/connect-41.jpg" alt="broken img">
                     <p>---------------------------------------------------------------------------------------------------------------</p>
                     <div id="loginDiv">
-                        <label for="username">Enter your username:</label>
-                        <input type="text" id="username" placeholder = "Username" name="username">
-                        <label for="password">Enter your password:</label>
-                        <input type="text" id="password" placeholder="Password" name="password"><br>
-                        <button type="button" id="loginButton" placeholder="loginButton" name="loginButton">Log in</button>
-                        <button type="button" id="forgetPasswordButton" value="forgetPasswordButton" name="forgetPasswordButton">Forget password</button>
+                        <form action="/logIn" method="POST"></form>
+                            <label for="username">Enter your username:</label>
+                            <input type="text" name="username" required>
+                            <label for="password">Enter your password:</label>
+                            <input type="password" name="password" required><br>
+                            <button type="submit" id="loginButton" placeholder="loginButton" name="loginButton" onclick="loginRedirect()">Log in</button>
+                            <button type="button" id="forgetPasswordButton" value="forgetPasswordButton" name="forgetPasswordButton">Forget password</button>
                     </div>
                     <br>
                     <br>

@@ -3,7 +3,7 @@ const session = require('express-session');
 const app = express();
 const port = 3000;
 
-app.use(session({ secret: 'hyfns73jsm9r3j%67g'}));
+app.use(session({ secret: 'some secret here'}));
 
 let registeredUsers = [{username: "steve", password: "1234"}, {username: "ricky", password: "bobby"}, {username: "joerogan", password: "jre"}];
 
@@ -23,14 +23,16 @@ function authentication(req, res, next){
 function logIn(req, res, next){
 	if(req.session.loggedin){
 		res.status(200);
-		res.send("You're already logged in");
-		return;
+		next();
 	}
+	console.log("hello");
 	
 	let username = req.body.username;
 	let password = req.body.password;
+	console.log(password);
 	
-	const findUsername = registeredUsers.find((findUser) => findUser.username === username);
+	const findUsername = registeredUsers.find((user) => user.username === username);
+	console.log(findUsername);
 
 	if(findUsername){
 		//Check if user's password is the same
@@ -38,7 +40,7 @@ function logIn(req, res, next){
 			req.session.loggedin = true;
 			req.session.username = username;
 			res.status = 200;
-			res.send("You have logged in");
+			next();
 		}
 		else{
 			res.status(401);
@@ -62,20 +64,19 @@ app.get('/home-page.html', function(req,res) {
     res.sendFile(__dirname + "/home-page.html");
 })
 
-app.get('/game-page.html', function(req, res){ 
+app.get('/game-page.html', authentication, function(req, res){ 
     res.sendFile(__dirname + '/game-page.html')
 }); 
 
-app.get('/leaderboard.html', function(req, res){ 
+app.get('/leaderboard.html', authentication, function(req, res){ 
     res.sendFile(__dirname + '/leaderboard.html')
 }); 
 
 app.get('/sign-in.html', function(req, res){ 
     res.sendFile(__dirname + '/sign-in.html')
 });
-app.post('/sign-in.html', logIn);
 
-app.get('/user-profile.html', function(req, res){ 
+app.get('/user-profile.html', logIn, function(req, res){ 
     res.sendFile(__dirname + '/user-profile.html')
 }); 
 
@@ -83,7 +84,7 @@ app.get('/js/script.js', function(req, res){
     res.sendFile(__dirname + '/js/script.js')
 }); 
 
-app.get('/js/game.js', function(req, res){ 
+app.get('/js/game.js', authentication, function(req, res){ 
     res.sendFile(__dirname + '/js/game.js')
 }); 
 

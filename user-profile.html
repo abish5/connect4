@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css"   href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Connect 4</title>
 </head>
 <body>
     <nav>
-        <a href="./home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
+        <a href="/home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
         <ul id="navigationBar">
             <li><a href=./home-page.html id="game-home" onmouseover="GamehighlightOverHome()" onmouseout="GameunhighlightHome()">Home</a></li>
             <li><a href="./game-page.html" id="game-game" onmouseover="GamehighlightOverGame()" onmouseout="GameunhighlightGame()">Game</a></li>
@@ -44,15 +44,28 @@
                     <!-- Placeholder information -->
                     <div class="past-games">
                         <ul id="placeholder-game">
-                            <li id="player-header">Bot 1 vs. Bot 2</li>
+                            <li id="player-header">User vs. Bot 1</li>
                             <li style="flex-grow: 1;">0 : 3</li>
                             <li style="flex-grow: 1;">October 5th, 2020</li>
                         </ul>
                         <ul id="placeholder-game">
-                            <li id="player-header">Bot 1 vs. Bot 2</li>
+                            <li id="player-header">User vs. Bot 2</li>
                             <li style="flex-grow: 1;">2 : 1</li>
                             <li style="flex-grow: 1;">October 6th, 2020</li>
                         </ul>
+                        <form action="/add-friend" method="POST">
+                            <label for="username">Add a friend: </label>
+                            <input type="text" name="username" id="username" required><br>
+                            <button type="submit" id="addFriend" name="addFriend">Add</button>
+                        </form>
+                        <form action="/message-friend" method="POST">
+                            <br>
+                            <br>
+                            <label for="username">Message Friend: </label>
+                            <input type="text" name="username" id="username" required><br>
+                            <input type="textbox" name="textbox" id="textbox" required><br>
+                            <button type="submit" id="sendMessage" name="sendMessage">Send</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -86,6 +99,6 @@
             </div>
         </div>
     </main>
-    <script type='application/javascript' src="./js/script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>

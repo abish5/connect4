@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css"   href="/css/style.css">
+    <link rel="stylesheet" type="text/css"   href="./css/style.css">
     <title>Connect 4</title>
 </head>
 <body>
@@ -20,29 +20,27 @@
     <main>
         <div class="main-container">
         <div class="main-container" id="main-container1">
-            <h1 id = "leader-info">1st: </h1>
-            <h4>Games Won: </h4>
+            <h1 id = "leader1-info">1st: </h1>
+            <h4 id="leader1-wins">Games Won: </h4>
             <button style = "margin-left: 900px;" type = "button" id = "displayLeaderButton" name = "displayLeaderButton" value = "displayLeaderButton">Display Leader</button>
-            <h2>2nd: </h2>
-            <h4>Games Won:</h4><br>
-            <h4>3rd: </h4>
-            <h4>Games Won:</h4><br>
-            <h4>4th: </h4>
-            <h4>Games Won:</h4><br>
-            <h4>5th: </h4>
-            <h4>Games Won:</h4><br>
-            <h4>6th: </h4>
-            <h4>Games Won:</h4><br>
+            <h2 id = "leader2-info">2nd: </h2>
+            <h4 id = "leader2-wins">Games Won: </h4><br>
+            <h4 id = "leader3-info">3rd: </h4>
+            <h4 id = "leader3-wins">Games Won: </h4><br>
         </div>
     </main>
     <script>
-        var leaderContainer = document.getElementById("leader-info");
+        var leader1Container = document.getElementById("leader1-info");
+        var leader1Wins = document.getElementById("leader1-wins");
+        var leader2Container = document.getElementById("leader2-info");
+        var leader2Wins = document.getElementById("leader2-wins");
+        var leader3Container = document.getElementById("leader3-info");
+        var leader3Wins = document.getElementById("leader3-wins");
         let names = [];
         function displayLeaders(){
             let req = new XMLHttpRequest();
             req.open("GET", "https://raw.githubusercontent.com/dominictarr/random-name/master/first-names.txt");
             req.onload = function(){
-                console.log("HEllo");
                 var ourData = req.responseText;
                 names = ourData.split("\r\n");
                 console.log(names[0]);
@@ -52,9 +50,20 @@
         }
         document.getElementById("displayLeaderButton").addEventListener("click", displayLeaders);
         function renderHTML(data){
-            var htmlString = data[0]; 
-            if (leaderContainer.innerHTML === "1st: ") {
-                leaderContainer.insertAdjacentHTML('beforeend', htmlString);
+            var leader1 = data[0]; 
+            var leader2 = data[1];
+            var leader3 = data[2];
+            var Wins = ['10','9','8','7','6','5','4','3','2','1'];
+            var mostWins = Wins[0];
+            var mostWins2 = Wins[1];
+            var mostWins3 = Wins[2];
+            if (leader1Container.innerHTML === "1st: ") {
+                leader1Container.insertAdjacentHTML('beforeend', leader1);
+                leader1Wins.insertAdjacentHTML('beforeend', mostWins);
+                leader2Container.insertAdjacentHTML('beforeend', leader2);
+                leader2Wins.insertAdjacentHTML('beforeend', mostWins2);
+                leader3Container.insertAdjacentHTML('beforeend', leader3);
+                leader3Wins.insertAdjacentHTML('beforeend', mostWins3);
             }
         }
     </script>

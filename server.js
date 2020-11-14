@@ -5,8 +5,8 @@ const port = 3000;
 
 app.use(session({ secret: 'some secret here'}));
 
-let registeredUsers = [{username: "steve", password: "1234"}, {username: "ricky", password: "bobby"}, {username: "joerogan", password: "jre"}];
-
+let registeredUsers = [{username: "steve", password: "1234"}, {username: "ricky", password: "bobby"}, {username: "joerogan", password: "jre"}, {username: "friend", password:"friendship"}];
+let userFriends = ["ricky", "joerogan"];
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -20,16 +20,67 @@ function authentication(req, res, next){
 	}
 }
 
+function messageFriend(req, res, next){
+	if(!req.session.loggedin){
+		res.status(401);
+		res.send("Please login to send a message.");
+		return;
+	}
+	let username = req.body.username;
+
+	if(username === undefined){
+		res.status(401);
+		res.send("That username is not registered.")
+		return;
+	}
+	res.send("Your message has been delivered!");
+}
+
+function addFriend(req, res, next){
+	if(!req.session.loggedin){
+		res.status(401);
+		res.send("This user is not registered");
+		return;
+	}
+	let username = req.body.username;
+	if(username === undefined){
+		res.status(401);
+		res.send("Enter a username");
+	}
+	userFriends.push(username);
+	res.status(200);
+	res.send("You have successfully added a friend.");
+}
+
+function signUp(req, res, next){
+	if(req.session.loggedin){
+		res.status(200);
+		res.send("You are already signed up.")
+	}
+	let username = req.body.username;
+	let password = req.body.password;
+	console.log(username);
+
+	if(username === undefined || password === undefined){
+		res.status(401);
+		res.send("Enter a username and password");
+		return;
+	}
+	registeredUsers.push({username: password});
+	req.session.loggedin = true;
+	res.send("You have successfully signed up!");
+}
+
 function logIn(req, res, next){
 	if(req.session.loggedin){
 		res.status(200);
-		next();
+		res.send("You are already logged in.");
 	}
 	console.log("hello");
 	
 	let username = req.body.username;
 	let password = req.body.password;
-	console.log(password);
+	console.log(username);
 	
 	const findUsername = registeredUsers.find((user) => user.username === username);
 	console.log(findUsername);
@@ -40,7 +91,7 @@ function logIn(req, res, next){
 			req.session.loggedin = true;
 			req.session.username = username;
 			res.status = 200;
-			next();
+			res.send("You are now Logged in");
 		}
 		else{
 			res.status(401);
@@ -76,7 +127,15 @@ app.get('/sign-in.html', function(req, res){
     res.sendFile(__dirname + '/sign-in.html')
 });
 
-app.get('/user-profile.html', logIn, function(req, res){ 
+app.post("/sign-in", logIn);
+
+app.post("/sign-up", signUp);
+
+app.post("/add-friend", addFriend);
+
+app.post("/message-friend", messageFriend);
+
+app.get('/user-profile.html', function(req, res){ 
     res.sendFile(__dirname + '/user-profile.html')
 }); 
 

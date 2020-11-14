@@ -187,3 +187,15 @@ main {
     margin-bottom: 300px;
 
 }
+#leader-info{
+    margin-top: 25px;
+}
+
+#addUser{
+    margin-top: 150px;
+}
+
+#textbox{
+    width: 277px;
+    height: 120px;
+}

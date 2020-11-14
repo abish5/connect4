@@ -152,7 +152,11 @@ main {
     margin-left: 20px;
 }
 
-
+#stats-info {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
 
 .friend-info {
     width: 100%;

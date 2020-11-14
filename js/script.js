@@ -115,3 +115,6 @@ function LeaderunhighlightInstructions(){
     let leaderLeader = document.getElementById("leader-instructions");
     leaderLeader.style.backgroundColor = "red";
 }
+function loginRedirect(){
+    window.location.href = './user-profile.html';
+}

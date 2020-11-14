@@ -43,7 +43,8 @@ function addFriend(req, res, next){
 		return;
 	}
 	let username = req.body.username;
-	if(username === undefined){
+	const findUsername = registeredUsers.find((user) => user.username === username);
+	if(!findUsername){
 		res.status(401);
 		res.send("Enter a username");
 	}

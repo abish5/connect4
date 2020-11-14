@@ -53,23 +53,11 @@
                             <li style="flex-grow: 1;">2 : 1</li>
                             <li style="flex-grow: 1;">October 6th, 2020</li>
                         </ul>
-                        <form action="/add-friend" method="POST">
-                            <label for="username">Add a friend: </label>
-                            <input type="text" name="username" id="username" required><br>
-                            <button type="submit" id="addFriend" name="addFriend">Add</button>
-                        </form>
-                        <form action="/message-friend" method="POST">
-                            <br>
-                            <br>
-                            <label for="username">Message Friend: </label>
-                            <input type="text" name="username" id="username" required><br>
-                            <input type="textbox" name="textbox" id="textbox" required><br>
-                            <button type="submit" id="sendMessage" name="sendMessage">Send</button>
-                        </form>
                     </div>
                 </div>
             </div>
             <div class="user-column-2">
+                
                 <div id="stats-info">
                     <h1>Stats</h1>
                     <p>Total Games: 2</p>
@@ -96,9 +84,23 @@
                         <img src="./img/placeholder-user.png" alt="default user icon">
                     </div>
                 </div>
+                <form action="/add-friend" method="POST">
+                    <label for="username">Add a friend: </label>
+                    <input type="text" name="username" id="username" required><br>
+                    <button type="submit" id="addFriend" name="addFriend">Add</button>
+                </form>
+                <form action="/message-friend" method="POST">
+                    <br>
+                    <br>
+                    <label for="username">Message Friend: </label>
+                    <input type="text" name="username" id="username" required><br>
+                    <input type="textbox" name="textbox" id="textbox" required><br>
+                    <button type="submit" id="sendMessage" name="sendMessage">Send</button>
+                </form>
             </div>
+
         </div>
     </main>
-    <script src="/js/script.js"></script>
+    <script type='application/javascript' src="/js/script.js"></script>
 </body>
 </html>

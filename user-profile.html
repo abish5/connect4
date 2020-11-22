@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Connect 4</title>
+</head>
+<body>
+    <nav>
+        <a href="/home-page.html"><img src="./img/connect4logo.png" alt="connect four logo" id="connectfourLogo"></a>
+        <ul id="navigationBar">
+            <li><a href=./home-page.html id="game-home" onmouseover="GamehighlightOverHome()" onmouseout="GameunhighlightHome()">Home</a></li>
+            <li><a href="./game-page.html" id="game-game" onmouseover="GamehighlightOverGame()" onmouseout="GameunhighlightGame()">Game</a></li>
+            <li><a href="./leaderboard.html" id="game-leaderboard" onmouseover="GamehighlightOverLeaderboard()" onmouseout="GameunhighlightLeaderboard()">Leaderboard</a></li>
+            <li><a href="./sign-in.html" id="game-sign-in" onmouseover="GamehighlightOverSignIn()" onmouseout="GameunhighlightSignIn()">Sign in</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="user-container">
+            <div class="user-column-1">
+                <div class="player-info">
+                    <!-- Placeholder information -->
+                    <img src="./img/placeholder-user.png" alt="default user icon">
+                    <div class="profile-text">
+                        <h1 style="margin-left: 30px;">Bot 1 - (Online)</h1>
+                        <ul>
+                            <li>Challenge</li>
+                            <li>Add Friend</li>
+                            <li>Message</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="game-history">
+                    <div class="past-games-header">
+                        <h1>Past Games</h1>
+                        <img style="width: 5%;" src="./img/yellow-arrow.png" alt="yellow-arrow-left">
+                    </div>
+                    <ul id="history-header">
+                        <li id="player-header">Players</li>
+                        <li style="flex-grow: 1;">Result</li>
+                        <li style="flex-grow: 1;">Date</li>
+                    </ul>
+                    <!-- Placeholder information -->
+                    <div class="past-games">
+                        <ul id="placeholder-game">
+                            <li id="player-header">User vs. Bot 1</li>
+                            <li style="flex-grow: 1;">0 : 3</li>
+                            <li style="flex-grow: 1;">October 5th, 2020</li>
+                        </ul>
+                        <ul id="placeholder-game">
+                            <li id="player-header">User vs. Bot 2</li>
+                            <li style="flex-grow: 1;">2 : 1</li>
+                            <li style="flex-grow: 1;">October 6th, 2020</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="user-column-2">
+                
+                <div id="stats-info">
+                    <h1>Stats</h1>
+                    <p>Total Games: 2</p>
+                    <p>W/L/D: 1/1/0</p>
+                </div>
+                <br>
+                <div class="friend-info">
+                    <!-- Placeholder information -->
+                    <h1>Friends</h1>
+                    <div id="friend-list">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                        <img src="./img/placeholder-user.png" alt="default user icon">
+                    </div>
+                </div>
+                <form action="/add-friend" method="POST">
+                    <label for="username">Add a friend: </label>
+                    <input type="text" name="username" id="username" required><br>
+                    <button type="submit" id="addFriend" name="addFriend">Add</button>
+                </form>
+                <form action="/message-friend" method="POST">
+                    <br>
+                    <br>
+                    <label for="username">Message Friend: </label>
+                    <input type="text" name="username" id="username" required><br>
+                    <input type="textbox" name="textbox" id="textbox" required><br>
+                    <button type="submit" id="sendMessage" name="sendMessage">Send</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+    <script type='application/javascript' src="/js/script.js"></script>
+</body>
+</html>

@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
             if(res.status === 409) {
                 return "409"
             } else{
-                authStateChanged(res);
+                authStateChanged(res.body);
                 return res.json()
             }
         })

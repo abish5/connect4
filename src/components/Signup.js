@@ -22,7 +22,7 @@ export default function Signup() {
     try {
       setError('')
       setLoading(true)
-      if(console.log(signup(emailRef.current.value, usernameRef.current.value,passwordRef.current.value)) === "409") { //THIS DOESN WORK
+      if(signup(emailRef.current.value, usernameRef.current.value,passwordRef.current.value) === "409") {
         return setError('Username already exists')
       } else {
         history.push("/")

@@ -16,17 +16,17 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 
 
-//Routes
-
-
-const signupRoute = require('../src/routes/signupRouter');
-const loginRoute = require('../src/routes/loginRouter');
-const addFriendRoute = require('../src/routes/addFriendRouter');
+const signupRoute = require('../src/routes/signupRouter')
+const loginRoute = require('../src/routes/loginRouter')
 
 app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
-app.use('/user', addFriendRoute);
 
+
+
+
+
+//Routes
 
 
 app.get('/', function(req, res){

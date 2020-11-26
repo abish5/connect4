@@ -1,131 +1,184 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navigation from './Navigation'
 
+const boardStyle = {
+    marginTop:"50px",
+    display:"flex", 
+    backgroundColor:"blue", 
+    alignItems:"center",
+    flexWrap:"wrap",
+    height:"525px",
+    width:"611px"
+}
 
-// const board = []
-
-// const boardStyle = {
-//     marginTop:"50px",
-//     border:"1px solid red", 
-//     display:"flex", 
-//     alignItems:"center",
-//     flexWrap:"wrap",
-//     width:"527px"
-// }
-
-// const normalButtonStyle = {
-//     width: "75px",
-//     height: "75px",
-//     border: "1px solid black",
-//     borderRadius: "40px",
-//     padding: "5px"
+const normalButtonStyle = {
+    width: "75px",
+    height: "75px",
+    border: "1px solid black",
+    borderRadius: "40px",
+    backgroundColor: "ghostwhite",
+    padding: "5px"
     
-// }
+}
 
-// const redButtonStyle = {
-//     width: "75px",
-//     height: "75px",
-//     border: "1px solid black",
-//     borderRadius: "25px",
-//     backgroundColor: "red",
-//     padding: "5px"
-// }
+const redButtonStyle = {
+    width: "75px",
+    height: "75px",
+    border: "1px solid black",
+    borderRadius: "40px",
+    backgroundColor: "red",
+    padding: "5px"
+}
 
-// const blueButtonStyle = {
-//     width: "75px",
-//     height: "75px",
-//     border: "1px solid black",
-//     borderRadius: "25px",
-//     backgroundColor: "blue",
-//     padding: "5px"
-// }
+const yellowButtonStyle = {
+    width: "75px",
+    height: "75px",
+    border: "1px solid black",
+    borderRadius: "40px",
+    backgroundColor: "yellow",
+    padding: "5px"
+}
 
-// function Piece(props) {
+const gameBoard = initBoard()
 
-//     function changeColor(index) {
-//         props.pieces[props.value].piece = <div style={redButtonStyle}></div>
-//     }
+function initBoard() {
+    var board = []
 
-//     return (
-//         <div onClick={() => changeColor(props.value)}>{props.pieces[props.value].piece}</div>
-//     )
-// }
+    for (var i = 0; i < 6; ++i) {
+        for (var j = 0; j < 7; ++j) {
+            board.push({
+                positionX: j,
+                positionY: i,
+                currColor: "normal",
+                piece: <div style={normalButtonStyle}></div>
+            })
+        }
+    }
+    return board
+}
 
-// function Board() {
+function Players(props) {
+    if(props.currPlayer === 'red') {
+        if(props.isWinner === true) {
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2 has won!</h1></div>       //switched
+        }
+        return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1's Turn</h1></div>
+    }
+    else if(props.currPlayer === 'yellow') {
+        if(props.isWinner === true) {
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>           //switched
+        }
+        return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2's Turn</h1></div>
+    }
+}
 
-//     return (
-//         <div style={{border:"1px solid red", width:"1000px", display:"flex", justifyContent:"Center"}}>
-//             <div id="gameBoard" style={boardStyle}>
-//                 <Piece pieces={board} value={0}/>
-//                 <Piece pieces={board} value={1}/>
-//                 <Piece pieces={board} value={2}/>
-//                 <Piece pieces={board} value={3}/>
-//                 <Piece pieces={board} value={4}/>
-//                 <Piece pieces={board} value={5}/>
-//                 <Piece pieces={board} value={6}/>
-//                 <Piece pieces={board} value={7}/>
-//                 <Piece pieces={board} value={8}/>
-//                 <Piece pieces={board} value={9}/>
-//                 <Piece pieces={board} value={10}/>
-//                 <Piece pieces={board} value={11}/>
-//                 <Piece pieces={board} value={12}/>
-//                 <Piece pieces={board} value={13}/>
-//                 <Piece pieces={board} value={14}/>
-//                 <Piece pieces={board} value={15}/>
-//                 <Piece pieces={board} value={16}/>
-//                 <Piece pieces={board} value={17}/>
-//                 <Piece pieces={board} value={18}/>
-//                 <Piece pieces={board} value={19}/>
-//                 <Piece pieces={board} value={20}/>
-//                 <Piece pieces={board} value={21}/>
-//                 <Piece pieces={board} value={22}/>
-//                 <Piece pieces={board} value={23}/>
-//                 <Piece pieces={board} value={24}/>
-//                 <Piece pieces={board} value={25}/>
-//                 <Piece pieces={board} value={26}/>
-//                 <Piece pieces={board} value={27}/>
-//                 <Piece pieces={board} value={28}/>
-//                 <Piece pieces={board} value={29}/>
-//                 <Piece pieces={board} value={30}/>
-//                 <Piece pieces={board} value={31}/>
-//                 <Piece pieces={board} value={32}/>
-//                 <Piece pieces={board} value={33}/>
-//                 <Piece pieces={board} value={34}/>
-//                 <Piece pieces={board} value={35}/>
-//                 <Piece pieces={board} value={36}/>
-//                 <Piece pieces={board} value={37}/>
-//                 <Piece pieces={board} value={38}/>
-//                 <Piece pieces={board} value={39}/>
-//                 <Piece pieces={board} value={40}/>
-//                 <Piece pieces={board} value={41}/>
-//             </div>
-//         </div>
-//     )
-// }
+export default function Game() {
+    const [player, setPlayer] = useState('red');
+    const [isOver, setIsOver] = useState(false);
 
-export default class Game extends React.Component {
-    constructor() {
-        super();
-        this.board = "yo"
+
+    function changeStyle(ele, i) {
+        if (player === 'red' && gameBoard[i].currColor === "normal") {
+            gameBoard[i] = {
+                positionX: ele.positionX,
+                positionY: ele.positionY,
+                currColor: "red",
+                piece: <div style={redButtonStyle}></div>
+            }
+            if(isOver === true) {
+                setPlayer("red")
+            } else {
+                setPlayer("yellow")       // Change player after yellow has gone
+            }
+        } 
+        else if (player === 'yellow' && gameBoard[i].currColor === "normal") {
+            gameBoard[i] = {
+                positionX: ele.positionX,
+                positionY: ele.positionY,
+                currColor: "yellow",
+                piece: <div style={yellowButtonStyle}></div>
+            }
+            if(isOver === true) {
+                setPlayer("yellow")
+            } else {
+                setPlayer("red")       // Change player after yellow has gone
+            }
+        }
+    }
+    
+    function checkValidMove(ele, i) {
+        if (ele.positionY === 5 || gameBoard[i + 7].currColor !== "normal") { //Check if the piece will not float on board
+            changeStyle(ele, i); //CHANGE THIS TO HOVER BUT WHILE LOOP NEEDED
+            checkIfWon(i)
+        } else {
+            alert("Invalid Move");
+        }
+    }
+    
+    function checkIfWon(i) {
+        var currP = gameBoard[i].currColor
+        if(gameBoard[i + 1] !== undefined && gameBoard[i + 2] !== undefined &&  gameBoard[i + 3] !== undefined) { //Check undefined
+            if (gameBoard[i + 1].currColor === currP && gameBoard[i + 2].currColor === currP && gameBoard[i + 3].currColor === currP) { //Check right
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i + 8] !== undefined && gameBoard[i + 16] !== undefined &&  gameBoard[i + 24] !== undefined) { //Check undefined
+            if (gameBoard[i + 8].currColor === currP && gameBoard[i + 16].currColor === currP && gameBoard[i + 24].currColor === currP) { //Check down-right
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i + 7] !== undefined && gameBoard[i + 14] !== undefined && gameBoard[i + 21] !== undefined) { //Check undefined
+            if (gameBoard[i + 7].currColor === currP && gameBoard[i + 14].currColor === currP && gameBoard[i + 21].currColor === currP) { //Check down
+                console.log(currP + " has won!");
+                console.log(player);
+                setIsOver(true);
+            }
+        } if(gameBoard[i + 6] !== undefined && gameBoard[i + 12] !== undefined && gameBoard[i + 18] !== undefined) { //Check undefined
+            if (gameBoard[i + 6].currColor === currP && gameBoard[i + 12].currColor === currP && gameBoard[i + 18].currColor === currP) { //Check down-left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 1] !== undefined && gameBoard[i - 2] !== undefined && gameBoard[i - 3] !== undefined) { //Check undefined
+            if (gameBoard[i - 1].currColor === currP && gameBoard[i - 2].currColor === currP && gameBoard[i - 3].currColor === currP) { //Check left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 8] !== undefined && gameBoard[i - 16] !== undefined && gameBoard[i - 24] !== undefined) { //Check undefined
+            if (gameBoard[i - 8].currColor === currP && gameBoard[i - 16].currColor === currP && gameBoard[i - 24].currColor === currP) { //Check up-left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 7] !== undefined && gameBoard[i - 14] !== undefined && gameBoard[i - 21] !== undefined) { //Check undefined
+            if (gameBoard[i - 7].currColor === currP && gameBoard[i - 14].currColor === currP && gameBoard[i - 21].currColor === currP) { //Check up
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 6] !== undefined && gameBoard[i - 12] !== undefined && gameBoard[i - 18] !== undefined) { //Check undefined
+            if (gameBoard[i - 6].currColor === currP && gameBoard[i - 12].currColor === currP && gameBoard[i - 18].currColor === currP) { //Check up-right
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } 
+        
     }
 
-    // initBoard() {
-    //     for (var i = 0; i < 6; ++i) {
-    //         for (var j = 0; j < 7; ++j) {
-    //             board.push({
-    //                 currColor: "normal",
-    //                 piece: <div style={normalButtonStyle}></div>
-    //             })
-    //         }
-    //     }
-    // }
-
-    render() {
+    function printBoard(board) {
         return (
-            <>
-                <Navigation />
-                {this.board}
-            </>
-        )
+            <div id="main-board" style={boardStyle}>
+              {board.map((ele, i) => (
+                <div onClick={() => checkValidMove(ele, i)} style={{margin: "5px"}}>
+                  {ele.piece}
+                </div>
+              ))}
+            </div>
+        );
     }
+
+    return (
+        <>
+            <Navigation />
+            <Players currPlayer={player} isWinner={isOver}/>
+            { printBoard(gameBoard) }
+        </>
+    )
 }

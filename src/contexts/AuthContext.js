@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-
 const AuthContext = React.createContext();
  
 export function useAuth() {
@@ -11,8 +10,8 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [statusCode, setStatus] = useState();
 
-    function signup(email, username, password) {
-        fetch("http://localhost:3000/signup", {
+    async function signup(email, username, password) {
+        await fetch("/signup", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,15 +31,15 @@ export function AuthProvider({ children }) {
             }
         })
         .then(data => console.log(data))
-        .catch(error => console.log('ERROR'))
+        .catch(error => console.log(error))
     }
     
-    function login(username, password) {
-        console.log(statusCode)
-        fetch("http://localhost:3000/login", {
+    async function login(username, password) {
+        await fetch("/login", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
                 username: username,
@@ -59,29 +58,37 @@ export function AuthProvider({ children }) {
         .catch(error => console.log(error))
         console.log("We are sending: " + statusCode)
         if(statusCode === undefined) {
-            statusCode = 404
+            setStatus(404)
         }
         return statusCode
     }
 
-    function currStatus(code) {
-        setStatus(code)
-    }
-
-    function authStateChanged(user) {
+    var authStateChanged = (user) => {
+        localStorage.setItem("username", user.username)
+        localStorage.setItem("password", user.password)
+        localStorage.setItem("email", user.email)
+        localStorage.setItem("friends", user.friends)
         setCurrentUser(user);
+        setLoading(false)
     }
-
     useEffect(() => {
-        const unsubscribe = null //setCurrentUser
-            setLoading(false);
-        return unsubscribe;
+        if(localStorage.getItem("username") != null) {
+            setCurrentUser({
+                "username": localStorage.getItem("username"),
+                "password": localStorage.getItem("password"),
+                "email": localStorage.getItem("email"),
+                "friends": localStorage.getItem("friends")
+            });
+        }
+        setLoading(false)
+
     }, [])
+    
     
     const value = {
         currentUser,
         login,
-        signup
+        signup,
     }
     return (
         <AuthContext.Provider value={value}>

@@ -2,12 +2,34 @@ import React from "react"
 import Signup from './Signup'
 import Home from './Home'
 import Login from './Login'
-import Game from './Game'
+import Lobbies from './Lobbies'
 import { Container } from 'react-bootstrap'
 import { AuthProvider } from "../contexts/AuthContext.js";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Leaderboard from "./Leaderboard"
+import { useAuth } from "../contexts/AuthContext"
 
+function PrivateRoute({children, ...rest}) {
+  const { currentUser } = useAuth()
+  return(
+    <Route {...rest} render={() => {
+      return currentUser !== undefined
+          ? children
+          : <Redirect to='/login' />
+    }}></Route>
+  )
+}
+
+function AuthRoute({children, ...rest}) {
+  const { currentUser } = useAuth()
+  return(
+    <Route {...rest} render={() => {
+      return currentUser !== undefined
+          ? <Redirect to='/' />
+          : children
+    }}></Route>
+  )
+}
 
 function App() {
   return (
@@ -19,11 +41,22 @@ function App() {
         <Router>
           <AuthProvider>
             <Switch>
-              <Route path="/play" component={Game}></Route>
-              <Route path="/signup" component={Signup}></Route>
-              <Route path="/login" component={Login}></Route>
-              <Route path="/leaderboard" component={Leaderboard}></Route>
-              <Route exact path="/" component={Home}></Route>
+              <AuthRoute exact path="/login">
+                <Login />
+              </AuthRoute>
+              <AuthRoute path="/signup">
+                <Signup />
+              </AuthRoute>
+        
+              <PrivateRoute path="/play" component={Lobbies}> 
+                <Lobbies />
+              </PrivateRoute>
+              <PrivateRoute path="/leaderboard">
+                <Leaderboard />
+              </PrivateRoute>
+              <PrivateRoute exact path="/">
+                <Home />
+              </PrivateRoute>
             </Switch>
           </AuthProvider>
         </Router>

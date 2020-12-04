@@ -2,8 +2,15 @@ import React from 'react'
 import { Card, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 
+
 export default function Navigation() {
     const { currentUser } = useAuth()
+
+    function logout() {
+        console.log("hi")
+        localStorage.clear()
+    }
+
     return (
         <>
             <Navbar bg="dark" variant="dark" style={{width:"700px"}}>
@@ -11,8 +18,10 @@ export default function Navigation() {
                 <Nav className="mr-auto">
                 <Nav.Link href="/play">Play</Nav.Link>
                 <Nav.Link href="/leaderboard">Leaderboard</Nav.Link>
-                <div style={{marginLeft:"225px"}}>
-                    <Nav.Link href="profile">Welcome, { currentUser.username } </Nav.Link>
+                <div style={{marginLeft:"250px"}}>
+                    {console.log(currentUser)}
+                    <Nav.Link href="/profile">Welcome, { currentUser && currentUser.username } </Nav.Link>
+                    <Nav.Link onClick={ () => {logout()}} href="/login">Logout</Nav.Link>
                 </div>
                 </Nav>
             </Navbar>   

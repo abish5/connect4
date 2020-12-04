@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({ // Need to add id and stats?
     email: {
         type: String,
         required: true
@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    friends: {
+    friends: {      //Should make this friends ID
         type: [String]
     }
 }, { collection: "users"});

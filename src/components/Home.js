@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function Home(props) {
     const { currentUser } = useAuth()
+    
     return (
         <div>
             <Navigation />

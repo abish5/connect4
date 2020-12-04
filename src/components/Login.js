@@ -20,9 +20,9 @@ export default function Login() {
       
       if(login(usernameRef.current.value, passwordRef.current.value) === 404) {
         setLoading(false)
+        console.log("HE")
         setError('User not found')
       } else {
-        console.log("yo")
         history.push("/")
       }
     } catch {

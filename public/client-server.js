@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/connectfour"
+const url = "mongodb://localhost:27017/Connect4"
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
@@ -18,9 +18,11 @@ app.use(bodyParser.json());
 
 const signupRoute = require('../src/routes/signupRouter')
 const loginRoute = require('../src/routes/loginRouter')
+const usersRoute = require('../src/routes/usersRouter')
 
 app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
+app.use('/users', usersRoute);
 
 
 
@@ -41,4 +43,3 @@ mongoose.connect(url, { useNewUrlParser: true }, () => {
 
 app.listen(port);
 console.log(`server is listening at http://localhost:${port}`);
-

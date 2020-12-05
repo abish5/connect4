@@ -39,36 +39,32 @@ const yellowButtonStyle = {
     padding: "5px"
 }
 
-const buttonStyles = [normalButtonStyle, redButtonStyle, yellowButtonStyle];
-
-//const gameBoard = initBoard()
+const gameBoard = initBoard()
 
 function initBoard() {
     var board = []
 
-    for (var i = 0; i < 7; ++i) {
-        board.push([])
-        for (var j = 0; j < 6; ++j) {
-            board[i].push(0)  //0 represents "normal" colour and 1 represents first players move and 2 represents second players moves
-            // board.push({
-            //     positionX: j,
-            //     positionY: i,
-            //     currColor: "normal",
-            //     piece: <div style={normalButtonStyle}></div>
-            // })
+    for (var i = 0; i < 6; ++i) {
+        for (var j = 0; j < 7; ++j) {
+            board.push({
+                positionX: j,
+                positionY: i,
+                currColor: "normal",
+                piece: <div style={normalButtonStyle}></div>
+            })
         }
     }
     return board
 }
 
 function Players(props) {
-    if(props.currPlayer === 1) {
+    if(props.currPlayer === 'red') {
         if(props.isWinner === true) {
             return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2 has won!</h1></div>       //switched
         }
         return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1's Turn</h1></div>
     }
-    else if(props.currPlayer === 2) {
+    else if(props.currPlayer === 'yellow') {
         if(props.isWinner === true) {
             return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>           //switched
         }
@@ -77,82 +73,101 @@ function Players(props) {
 }
 
 export default function Game() {
-    const [player, setPlayer] = useState(1);
+    const [player, setPlayer] = useState('red');
     const [isOver, setIsOver] = useState(false);
-    const [gameBoard, setGameBoard] = useState(initBoard());
 
-    
-    function checkValidMove(row, col) {
-        console.log(row, col);
-        if(gameBoard[row][col] !== 0 || (row !== gameBoard.length-1 && gameBoard[row+1][col] === 0)) {
-            alert("Invalid Move");
-        }
-        else{
-            const newBoard = gameBoard.map(row=>[...row])
-            newBoard[row][col] = player;
-            //Check if gameBoard has any connect 4's
-            if(checkConnect4(newBoard, player)){
-                setIsOver(true);
+
+    function changeStyle(ele, i) {
+        if (player === 'red' && gameBoard[i].currColor === "normal") {
+            gameBoard[i] = {
+                positionX: ele.positionX,
+                positionY: ele.positionY,
+                currColor: "red",
+                piece: <div style={redButtonStyle}></div>
             }
-            else{
-                if(player === 1){
-                    setPlayer(2);
-                }
-                else if(player ===2){
-                    setPlayer(1);
-                }
+            if(isOver === true) {
+                setPlayer("red")
+            } else {
+                setPlayer("yellow")       // Change player after yellow has gone
             }
-            setGameBoard(newBoard);
+        } 
+        else if (player === 'yellow' && gameBoard[i].currColor === "normal") {
+            gameBoard[i] = {
+                positionX: ele.positionX,
+                positionY: ele.positionY,
+                currColor: "yellow",
+                piece: <div style={yellowButtonStyle}></div>
+            }
+            if(isOver === true) {
+                setPlayer("yellow")
+            } else {
+                setPlayer("red")       // Change player after yellow has gone
+            }
         }
     }
-    function checkConnect4(game, p){
-        //Check rows
-        for(let row = 0; row < game.length; row++){
-            for(let i = 3; i < 7; i++){
-                if(p === game[row][i] && p === game[row][i-1] && p === game[row][i-2] && p === game[row][i-3]){
-                    return true;
-                }
-            }
+    
+    function checkValidMove(ele, i) {
+        if (ele.positionY === 5 || gameBoard[i + 7].currColor !== "normal") { //Check if the piece will not float on board
+            changeStyle(ele, i); //CHANGE THIS TO HOVER BUT WHILE LOOP NEEDED
+            checkIfWon(i)
+        } else {
+            alert("Invalid Move");
         }
-        //Check columns
-        for(let col = 0; col < 7; col++){
-            for(let i = 3; i < 6; i++){
-                if(p === game[i][col] && p === game[i-1][col] && p === game[i-2][col] && p === game[i-3][col]){
-                    return true;
-                }
+    }
+    
+    function checkIfWon(i) {
+        var currP = gameBoard[i].currColor
+        if(gameBoard[i + 1] !== undefined && gameBoard[i + 2] !== undefined &&  gameBoard[i + 3] !== undefined) { //Check undefined
+            if (gameBoard[i + 1].currColor === currP && gameBoard[i + 2].currColor === currP && gameBoard[i + 3].currColor === currP) { //Check right
+                console.log(currP + " has won!");
+                setIsOver(true);
             }
-        }
-        //Check right diagonals
-        for(let row = 3; row<6; row++){
-            for(let col = 0; col<4; col++){
-                if(p === game[row][col] && p == game[row-1][col+1] && p === game[row-2][col+2] && p === game[row-3][col+3]){
-                    return true;
-                }
+        } if(gameBoard[i + 8] !== undefined && gameBoard[i + 16] !== undefined &&  gameBoard[i + 24] !== undefined) { //Check undefined
+            if (gameBoard[i + 8].currColor === currP && gameBoard[i + 16].currColor === currP && gameBoard[i + 24].currColor === currP) { //Check down-right
+                console.log(currP + " has won!");
+                setIsOver(true);
             }
-        }
-        //Check left diagonals
-        for(let row = 5; row>2; row--){
-            for(let col = 6; col>2;col--){
-                if(p === game[row][col] && p == game[row-1][col-1] && p === game[row-2][col-2] && p === game[row-3][col-2]){
-                    return true;
-                }
+        } if(gameBoard[i + 7] !== undefined && gameBoard[i + 14] !== undefined && gameBoard[i + 21] !== undefined) { //Check undefined
+            if (gameBoard[i + 7].currColor === currP && gameBoard[i + 14].currColor === currP && gameBoard[i + 21].currColor === currP) { //Check down
+                console.log(currP + " has won!");
+                console.log(player);
+                setIsOver(true);
             }
-        }
-        return false;
-
+        } if(gameBoard[i + 6] !== undefined && gameBoard[i + 12] !== undefined && gameBoard[i + 18] !== undefined) { //Check undefined
+            if (gameBoard[i + 6].currColor === currP && gameBoard[i + 12].currColor === currP && gameBoard[i + 18].currColor === currP) { //Check down-left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 1] !== undefined && gameBoard[i - 2] !== undefined && gameBoard[i - 3] !== undefined) { //Check undefined
+            if (gameBoard[i - 1].currColor === currP && gameBoard[i - 2].currColor === currP && gameBoard[i - 3].currColor === currP) { //Check left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 8] !== undefined && gameBoard[i - 16] !== undefined && gameBoard[i - 24] !== undefined) { //Check undefined
+            if (gameBoard[i - 8].currColor === currP && gameBoard[i - 16].currColor === currP && gameBoard[i - 24].currColor === currP) { //Check up-left
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 7] !== undefined && gameBoard[i - 14] !== undefined && gameBoard[i - 21] !== undefined) { //Check undefined
+            if (gameBoard[i - 7].currColor === currP && gameBoard[i - 14].currColor === currP && gameBoard[i - 21].currColor === currP) { //Check up
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } if(gameBoard[i - 6] !== undefined && gameBoard[i - 12] !== undefined && gameBoard[i - 18] !== undefined) { //Check undefined
+            if (gameBoard[i - 6].currColor === currP && gameBoard[i - 12].currColor === currP && gameBoard[i - 18].currColor === currP) { //Check up-right
+                console.log(currP + " has won!");
+                setIsOver(true);
+            }
+        } 
+        
     }
 
     function printBoard(board) {
         return (
             <div id="main-board" style={boardStyle}>
-              {board.map((row, rowNum) => (
-                <div>
-                    {row.map ((col, colNum)=>(
-                         <div onClick={() => checkValidMove(colNum, rowNum)} style={{margin: "5px"}}>
-                             <div style={buttonStyles[col]}/>
-                    <p>{`${rowNum}, ${colNum}`}</p>
-                         </div>
-                    ))}
+              {board.map((ele, i) => (
+                <div onClick={() => checkValidMove(ele, i)} style={{margin: "5px"}}>
+                  {ele.piece}
                 </div>
               ))}
             </div>

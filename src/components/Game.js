@@ -84,14 +84,17 @@ export default function Game() {
     
     function checkValidMove(row, col) {
         console.log(row, col);
-        if(gameBoard[row][col] !== 0 || (row !== gameBoard.length-1 && gameBoard[row+1][col] === 0)) {
-            alert("Invalid Move");
+        console.log(col);
+        console.log(gameBoard[row][col+1]);
+        if(gameBoard[row][col] !== 0 || (col !== 5 && gameBoard[row][col+1] === 0)) {
+             alert("Invalid Move");
         }
         else{
             const newBoard = gameBoard.map(row=>[...row])
             newBoard[row][col] = player;
+            console.log(newBoard[row][col]);
             //Check if gameBoard has any connect 4's
-            if(checkConnect4(newBoard, player)){
+            if(checkConnect4(gameBoard, player)){
                 setIsOver(true);
             }
             else{
@@ -107,33 +110,37 @@ export default function Game() {
     }
     function checkConnect4(game, p){
         //Check rows
-        for(let row = 0; row < game.length; row++){
-            for(let i = 3; i < 7; i++){
-                if(p === game[row][i] && p === game[row][i-1] && p === game[row][i-2] && p === game[row][i-3]){
+        for(let row = 0; row < 7; row++){
+            for(let i = 0; i < 6; i++){
+                if(p === game[row][i] && p === game[row][i+1] && p === game[row][i+2] && p === game[row][i+3]){
+                    console.log("You won!")
                     return true;
                 }
             }
         }
         //Check columns
-        for(let col = 0; col < 7; col++){
-            for(let i = 3; i < 6; i++){
+        for(let col = 0; col < 6; col++){
+            for(let i = 3; i < 7; i++){
                 if(p === game[i][col] && p === game[i-1][col] && p === game[i-2][col] && p === game[i-3][col]){
+                    console.log("You won!");
                     return true;
                 }
             }
         }
         //Check right diagonals
-        for(let row = 3; row<6; row++){
-            for(let col = 0; col<4; col++){
-                if(p === game[row][col] && p == game[row-1][col+1] && p === game[row-2][col+2] && p === game[row-3][col+3]){
+        for(let row = 0; row<4; row++){
+            for(let col = 3; col<6; col++){
+                if(p === game[row][col] && p == game[row+1][col-1] && p === game[row+2][col-2] && p === game[row+3][col-3]){
+                    console.log("You won!");
                     return true;
                 }
             }
         }
         //Check left diagonals
-        for(let row = 5; row>2; row--){
-            for(let col = 6; col>2;col--){
-                if(p === game[row][col] && p == game[row-1][col-1] && p === game[row-2][col-2] && p === game[row-3][col-2]){
+        for(let row = 6; row>2; row--){
+            for(let col = 5; col>2;col--){
+                if(p === game[row][col] && p == game[row-1][col-1] && p === game[row-2][col-2] && p === game[row-3][col-3]){
+                    console.log("You won!");
                     return true;
                 }
             }
@@ -148,7 +155,7 @@ export default function Game() {
               {board.map((row, rowNum) => (
                 <div>
                     {row.map ((col, colNum)=>(
-                         <div onClick={() => checkValidMove(colNum, rowNum)} style={{margin: "5px"}}>
+                         <div onClick={() => checkValidMove(rowNum, colNum)} style={{margin: "5px"}}>
                              <div style={buttonStyles[col]}/>
                     <p>{`${rowNum}, ${colNum}`}</p>
                          </div>
@@ -167,3 +174,4 @@ export default function Game() {
         </>
     )
 }
+

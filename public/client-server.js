@@ -19,10 +19,14 @@ app.use(bodyParser.json());
 const signupRoute = require('../src/routes/signupRouter')
 const loginRoute = require('../src/routes/loginRouter')
 const usersRoute = require('../src/routes/usersRouter')
+const addFriendRoute = require('../src/routes/addFriendRouter')
+const gamesRoute = require('../src/routes/gamesRouter')
 
 app.use('/signup', signupRoute);
 app.use('/login', loginRoute);
 app.use('/users', usersRoute);
+app.use('/addFriend', addFriendRoute);
+app.use('/game', gamesRoute);
 
 
 
@@ -40,6 +44,10 @@ app.get('/', function(req, res){
 mongoose.connect(url, { useNewUrlParser: true }, () => {
 	console.log("Connected to DB...");
 });
+
+app.listen(port);
+console.log(`server is listening at http://localhost:${port}`);
+
 
 app.listen(port);
 console.log(`server is listening at http://localhost:${port}`);

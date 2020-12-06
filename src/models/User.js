@@ -28,7 +28,11 @@ const UserSchema = mongoose.Schema({ // Need to add id and stats?
     winRate: {
         type: Number
     },
-    currentGames: [{type: mongoose.Schema.Types.ObjectId, ref: "Game"}]
+    wins: {
+        type: Number
+    },
+    currentGames: [{type: mongoose.Schema.Types.ObjectId, ref: "Game"}],
+    previousGames: [{type: mongoose.Schema.Types.ObjectId, ref: "Game"}]
     
 }, { collection: "users"});
 

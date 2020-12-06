@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { json } from 'body-parser'
+import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation'
 
 const boardStyle = {
@@ -8,6 +9,7 @@ const boardStyle = {
     alignItems:"center",
     flexWrap:"wrap",
     height:"525px",
+    flexDirection: "column",
     width:"611px"
 }
 
@@ -17,6 +19,7 @@ const normalButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "ghostwhite",
+    display: "inline",
     padding: "5px"
     
 }
@@ -27,6 +30,7 @@ const redButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "red",
+    display: "inline",
     padding: "5px"
 }
 
@@ -36,6 +40,7 @@ const yellowButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "yellow",
+    display: "inline",
     padding: "5px"
 }
 
@@ -46,9 +51,9 @@ const buttonStyles = [normalButtonStyle, redButtonStyle, yellowButtonStyle];
 function initBoard() {
     var board = []
 
-    for (var i = 0; i < 7; ++i) {
+    for (var i = 0; i < 6; ++i) {
         board.push([])
-        for (var j = 0; j < 6; ++j) {
+        for (var j = 0; j < 7; ++j) {
             board[i].push(0)  //0 represents "normal" colour and 1 represents first players move and 2 represents second players moves
             // board.push({
             //     positionX: j,
@@ -64,13 +69,13 @@ function initBoard() {
 function Players(props) {
     if(props.currPlayer === 1) {
         if(props.isWinner === true) {
-            return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2 has won!</h1></div>       //switched
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>       //switched
         }
         return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1's Turn</h1></div>
     }
     else if(props.currPlayer === 2) {
         if(props.isWinner === true) {
-            return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>           //switched
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"yellow"}}>Player 2 has won!</h1></div>           //switched
         }
         return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2's Turn</h1></div>
     }
@@ -79,39 +84,58 @@ function Players(props) {
 export default function Game() {
     const [player, setPlayer] = useState(1);
     const [isOver, setIsOver] = useState(false);
-    const [gameBoard, setGameBoard] = useState(initBoard());
+    const [gameBoard, setGameBoard] = useState([]);
+    const [gameId, setGameId] = useState("");
+    useEffect(()=>{
+        fetch("/game", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({username: "sean", opponent: "jack"})}).then((res)=>{
+            return res.json()
+        }).then((res)=>{
+            console.log(res)
+            setGameBoard(res.board)
+            setPlayer(res.turn)
+            setIsOver(!res.active)
+            setGameId(res._id)
+        })
+    }, [])
+    
 
     
     function checkValidMove(row, col) {
         console.log(row, col);
         console.log(col);
         console.log(gameBoard[row][col+1]);
-        if(gameBoard[row][col] !== 0 || (col !== 5 && gameBoard[row][col+1] === 0)) {
+        
+        if(gameBoard[row][col] !== 0 || (row !== 5  && gameBoard[row+1][col] === 0) || isOver === true) {
              alert("Invalid Move");
         }
         else{
-            const newBoard = gameBoard.map(row=>[...row])
-            newBoard[row][col] = player;
-            console.log(newBoard[row][col]);
-            //Check if gameBoard has any connect 4's
-            if(checkConnect4(gameBoard, player)){
-                setIsOver(true);
-            }
-            else{
-                if(player === 1){
-                    setPlayer(2);
-                }
-                else if(player ===2){
-                    setPlayer(1);
-                }
-            }
-            setGameBoard(newBoard);
+            // const newBoard = gameBoard.map(row=>[...row])
+            // newBoard[row][col] = player;
+            // console.log(newBoard[row][col]);
+            // //Check if gameBoard has any connect 4's
+            // if(checkConnect4(newBoard, player)){
+            //      setIsOver(true);
+            // }
+            // else{
+            //     if(player === 1){
+            //         setPlayer(2);
+            //     }
+            //     else if(player ===2){
+            //         setPlayer(1);
+            //     }
+            // }
+            // setGameBoard(newBoard);
+        fetch("/game/" + gameId, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({row: row, col: col, username: "sean"})}).then((res=>res.json())).then((game=>{
+            setGameBoard(game.board)
+            setPlayer(game.turn)
+            setIsOver(!game.active)
+        }))
         }
     }
     function checkConnect4(game, p){
         //Check rows
-        for(let row = 0; row < 7; row++){
-            for(let i = 0; i < 6; i++){
+        for(let row = 0; row < 6; row++){
+            for(let i = 0; i < 4; i++){
                 if(p === game[row][i] && p === game[row][i+1] && p === game[row][i+2] && p === game[row][i+3]){
                     console.log("You won!")
                     return true;
@@ -119,8 +143,8 @@ export default function Game() {
             }
         }
         //Check columns
-        for(let col = 0; col < 6; col++){
-            for(let i = 3; i < 7; i++){
+        for(let col = 0; col <7; col++){
+            for(let i = 3; i < 6; i++){
                 if(p === game[i][col] && p === game[i-1][col] && p === game[i-2][col] && p === game[i-3][col]){
                     console.log("You won!");
                     return true;
@@ -128,8 +152,8 @@ export default function Game() {
             }
         }
         //Check right diagonals
-        for(let row = 0; row<4; row++){
-            for(let col = 3; col<6; col++){
+        for(let row = 0; row<3; row++){
+            for(let col = 3; col<7; col++){
                 if(p === game[row][col] && p == game[row+1][col-1] && p === game[row+2][col-2] && p === game[row+3][col-3]){
                     console.log("You won!");
                     return true;
@@ -137,7 +161,7 @@ export default function Game() {
             }
         }
         //Check left diagonals
-        for(let row = 6; row>2; row--){
+        for(let row = 5; row>2; row--){
             for(let col = 5; col>2;col--){
                 if(p === game[row][col] && p == game[row-1][col-1] && p === game[row-2][col-2] && p === game[row-3][col-3]){
                     console.log("You won!");
@@ -153,9 +177,9 @@ export default function Game() {
         return (
             <div id="main-board" style={boardStyle}>
               {board.map((row, rowNum) => (
-                <div>
+                <div style= {{display: "flex"}}>
                     {row.map ((col, colNum)=>(
-                         <div onClick={() => checkValidMove(rowNum, colNum)} style={{margin: "5px"}}>
+                         <div onClick={() => checkValidMove(rowNum, colNum)} style={{margin: "5px", display: "inline"}}>
                              <div style={buttonStyles[col]}/>
                     <p>{`${rowNum}, ${colNum}`}</p>
                          </div>
@@ -174,4 +198,3 @@ export default function Game() {
         </>
     )
 }
-

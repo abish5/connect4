@@ -1,28 +1,23 @@
-import mongoose from "mongoose";
-
 const mongoose = require('mongoose');
 
-const GameSchema = mongoose.Schema({ 
-    id: {
-        type: ObjectId,
+const GameSchema = mongoose.Schema({ // Need to add id and stats?
+    players: 
+        [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    active: {
+        type: Boolean,
         required: true
     },
-    user_1_id: {
-        type: ObjectId,
-        required: true
-    },
-    user_2_id: {
-        type: ObjectId,
-        required: true
-    },
-    winner: {
+    detail: {
         type: String,
-        required: true
     },
-    current_turn: {         //Current turn red or yellow
-        type: String,
-        required: true
+    board: {
+        type: [[Number]]
     },
+    winner: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    turn: {
+        type: Number
+    }
+
 }, { collection: "games"});
 
-module.exports = mongoose.model('User', GameSchema);
+module.exports = mongoose.model('Game', GameSchema);

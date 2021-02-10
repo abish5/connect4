@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { json } from 'body-parser'
+import React, { useEffect, useState } from 'react'
 import Navigation from './Navigation'
 
 const boardStyle = {
@@ -8,6 +9,7 @@ const boardStyle = {
     alignItems:"center",
     flexWrap:"wrap",
     height:"525px",
+    flexDirection: "column",
     width:"611px"
 }
 
@@ -17,6 +19,7 @@ const normalButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "ghostwhite",
+    display: "inline",
     padding: "5px"
     
 }
@@ -27,6 +30,7 @@ const redButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "red",
+    display: "inline",
     padding: "5px"
 }
 
@@ -36,138 +40,150 @@ const yellowButtonStyle = {
     border: "1px solid black",
     borderRadius: "40px",
     backgroundColor: "yellow",
+    display: "inline",
     padding: "5px"
 }
 
-const gameBoard = initBoard()
+const buttonStyles = [normalButtonStyle, redButtonStyle, yellowButtonStyle];
+
+//const gameBoard = initBoard()
 
 function initBoard() {
     var board = []
 
     for (var i = 0; i < 6; ++i) {
+        board.push([])
         for (var j = 0; j < 7; ++j) {
-            board.push({
-                positionX: j,
-                positionY: i,
-                currColor: "normal",
-                piece: <div style={normalButtonStyle}></div>
-            })
+            board[i].push(0)  //0 represents "normal" colour and 1 represents first players move and 2 represents second players moves
+            // board.push({
+            //     positionX: j,
+            //     positionY: i,
+            //     currColor: "normal",
+            //     piece: <div style={normalButtonStyle}></div>
+            // })
         }
     }
     return board
 }
 
 function Players(props) {
-    if(props.currPlayer === 'red') {
+    if(props.currPlayer === 1) {
         if(props.isWinner === true) {
-            return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2 has won!</h1></div>       //switched
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>       //switched
         }
         return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1's Turn</h1></div>
     }
-    else if(props.currPlayer === 'yellow') {
+    else if(props.currPlayer === 2) {
         if(props.isWinner === true) {
-            return <div style={{marginTop:"30px"}}><h1 style={{color:"red"}}>Player 1 has won!</h1></div>           //switched
+            return <div style={{marginTop:"30px"}}><h1 style={{color:"yellow"}}>Player 2 has won!</h1></div>           //switched
         }
         return <div style={{marginTop:"30px"}}><h1 style={{color:"#FFCA00"}}>Player 2's Turn</h1></div>
     }
 }
 
 export default function Game() {
-    const [player, setPlayer] = useState('red');
+    const [player, setPlayer] = useState(1);
     const [isOver, setIsOver] = useState(false);
-
-
-    function changeStyle(ele, i) {
-        if (player === 'red' && gameBoard[i].currColor === "normal") {
-            gameBoard[i] = {
-                positionX: ele.positionX,
-                positionY: ele.positionY,
-                currColor: "red",
-                piece: <div style={redButtonStyle}></div>
-            }
-            if(isOver === true) {
-                setPlayer("red")
-            } else {
-                setPlayer("yellow")       // Change player after yellow has gone
-            }
-        } 
-        else if (player === 'yellow' && gameBoard[i].currColor === "normal") {
-            gameBoard[i] = {
-                positionX: ele.positionX,
-                positionY: ele.positionY,
-                currColor: "yellow",
-                piece: <div style={yellowButtonStyle}></div>
-            }
-            if(isOver === true) {
-                setPlayer("yellow")
-            } else {
-                setPlayer("red")       // Change player after yellow has gone
-            }
-        }
-    }
+    const [gameBoard, setGameBoard] = useState([]);
+    const [gameId, setGameId] = useState("");
+    useEffect(()=>{
+        fetch("/game", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({username: "sean", opponent: "jack"})}).then((res)=>{
+            return res.json()
+        }).then((res)=>{
+            console.log(res)
+            setGameBoard(res.board)
+            setPlayer(res.turn)
+            setIsOver(!res.active)
+            setGameId(res._id)
+        })
+    }, [])
     
-    function checkValidMove(ele, i) {
-        if (ele.positionY === 5 || gameBoard[i + 7].currColor !== "normal") { //Check if the piece will not float on board
-            changeStyle(ele, i); //CHANGE THIS TO HOVER BUT WHILE LOOP NEEDED
-            checkIfWon(i)
-        } else {
-            alert("Invalid Move");
-        }
-    }
+
     
-    function checkIfWon(i) {
-        var currP = gameBoard[i].currColor
-        if(gameBoard[i + 1] !== undefined && gameBoard[i + 2] !== undefined &&  gameBoard[i + 3] !== undefined) { //Check undefined
-            if (gameBoard[i + 1].currColor === currP && gameBoard[i + 2].currColor === currP && gameBoard[i + 3].currColor === currP) { //Check right
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i + 8] !== undefined && gameBoard[i + 16] !== undefined &&  gameBoard[i + 24] !== undefined) { //Check undefined
-            if (gameBoard[i + 8].currColor === currP && gameBoard[i + 16].currColor === currP && gameBoard[i + 24].currColor === currP) { //Check down-right
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i + 7] !== undefined && gameBoard[i + 14] !== undefined && gameBoard[i + 21] !== undefined) { //Check undefined
-            if (gameBoard[i + 7].currColor === currP && gameBoard[i + 14].currColor === currP && gameBoard[i + 21].currColor === currP) { //Check down
-                console.log(currP + " has won!");
-                console.log(player);
-                setIsOver(true);
-            }
-        } if(gameBoard[i + 6] !== undefined && gameBoard[i + 12] !== undefined && gameBoard[i + 18] !== undefined) { //Check undefined
-            if (gameBoard[i + 6].currColor === currP && gameBoard[i + 12].currColor === currP && gameBoard[i + 18].currColor === currP) { //Check down-left
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i - 1] !== undefined && gameBoard[i - 2] !== undefined && gameBoard[i - 3] !== undefined) { //Check undefined
-            if (gameBoard[i - 1].currColor === currP && gameBoard[i - 2].currColor === currP && gameBoard[i - 3].currColor === currP) { //Check left
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i - 8] !== undefined && gameBoard[i - 16] !== undefined && gameBoard[i - 24] !== undefined) { //Check undefined
-            if (gameBoard[i - 8].currColor === currP && gameBoard[i - 16].currColor === currP && gameBoard[i - 24].currColor === currP) { //Check up-left
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i - 7] !== undefined && gameBoard[i - 14] !== undefined && gameBoard[i - 21] !== undefined) { //Check undefined
-            if (gameBoard[i - 7].currColor === currP && gameBoard[i - 14].currColor === currP && gameBoard[i - 21].currColor === currP) { //Check up
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } if(gameBoard[i - 6] !== undefined && gameBoard[i - 12] !== undefined && gameBoard[i - 18] !== undefined) { //Check undefined
-            if (gameBoard[i - 6].currColor === currP && gameBoard[i - 12].currColor === currP && gameBoard[i - 18].currColor === currP) { //Check up-right
-                console.log(currP + " has won!");
-                setIsOver(true);
-            }
-        } 
+    function checkValidMove(row, col) {
+        console.log(row, col);
+        console.log(col);
+        console.log(gameBoard[row][col+1]);
         
+        if(gameBoard[row][col] !== 0 || (row !== 5  && gameBoard[row+1][col] === 0) || isOver === true) {
+             alert("Invalid Move");
+        }
+        else{
+            // const newBoard = gameBoard.map(row=>[...row])
+            // newBoard[row][col] = player;
+            // console.log(newBoard[row][col]);
+            // //Check if gameBoard has any connect 4's
+            // if(checkConnect4(newBoard, player)){
+            //      setIsOver(true);
+            // }
+            // else{
+            //     if(player === 1){
+            //         setPlayer(2);
+            //     }
+            //     else if(player ===2){
+            //         setPlayer(1);
+            //     }
+            // }
+            // setGameBoard(newBoard);
+        fetch("/game/" + gameId, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({row: row, col: col, username: "sean"})}).then((res=>res.json())).then((game=>{
+            setGameBoard(game.board)
+            setPlayer(game.turn)
+            setIsOver(!game.active)
+        }))
+        }
+    }
+    function checkConnect4(game, p){
+        //Check rows
+        for(let row = 0; row < 6; row++){
+            for(let i = 0; i < 4; i++){
+                if(p === game[row][i] && p === game[row][i+1] && p === game[row][i+2] && p === game[row][i+3]){
+                    console.log("You won!")
+                    return true;
+                }
+            }
+        }
+        //Check columns
+        for(let col = 0; col <7; col++){
+            for(let i = 3; i < 6; i++){
+                if(p === game[i][col] && p === game[i-1][col] && p === game[i-2][col] && p === game[i-3][col]){
+                    console.log("You won!");
+                    return true;
+                }
+            }
+        }
+        //Check right diagonals
+        for(let row = 0; row<3; row++){
+            for(let col = 3; col<7; col++){
+                if(p === game[row][col] && p == game[row+1][col-1] && p === game[row+2][col-2] && p === game[row+3][col-3]){
+                    console.log("You won!");
+                    return true;
+                }
+            }
+        }
+        //Check left diagonals
+        for(let row = 5; row>2; row--){
+            for(let col = 5; col>2;col--){
+                if(p === game[row][col] && p == game[row-1][col-1] && p === game[row-2][col-2] && p === game[row-3][col-3]){
+                    console.log("You won!");
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 
     function printBoard(board) {
         return (
             <div id="main-board" style={boardStyle}>
-              {board.map((ele, i) => (
-                <div onClick={() => checkValidMove(ele, i)} style={{margin: "5px"}}>
-                  {ele.piece}
+              {board.map((row, rowNum) => (
+                <div style= {{display: "flex"}}>
+                    {row.map ((col, colNum)=>(
+                         <div onClick={() => checkValidMove(rowNum, colNum)} style={{margin: "5px", display: "inline"}}>
+                             <div style={buttonStyles[col]}/>
+                    <p>{`${rowNum}, ${colNum}`}</p>
+                         </div>
+                    ))}
                 </div>
               ))}
             </div>

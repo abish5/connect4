@@ -7,10 +7,19 @@ export default function Lobbies() {
     return (
         <div>
             <Navigation />
-            <Button>
-                Create Game
+            <Button className="m-3" variant="primary" type="submit">
+                Create a Game
             </Button>
-            <Card className="mw-100">
+            <Form className="m-3">
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Find a specific game</Form.Label>
+                    <Form.Control type="password" placeholder="Enter a user" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+            <Card className="mw-100 m-3">
                 <Card.Body>
                     <Card.Title>Test</Card.Title>
                     <Card.Text>
